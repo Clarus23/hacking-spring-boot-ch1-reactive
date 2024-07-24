@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import java.awt.*;
 import java.util.Date;
+import java.util.Objects;
 
 public class Item {
     private @Id String id;
@@ -22,6 +23,12 @@ public class Item {
         this.price = price;
     }
     public Item(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+    public Item(String id, String name, String description, double price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -46,4 +53,27 @@ public class Item {
     public void setAvailableUnits(int availableUnits) { this.availableUnits = availableUnits; }
     public void setLocation(Point location) { this.location = location; }
     public void setActive(boolean active) { this.active = active; }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Double.compare(price, item.price) == 0 && Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(description, item.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price);
+    }
 }
